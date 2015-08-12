@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/frontend">
+        <file>frontend/file.png</file>
+        <file>frontend/folder.png</file>
+        <file>frontend/index.html</file>
+        <file>frontend/style.css</file>
+    </qresource>
+</RCC>

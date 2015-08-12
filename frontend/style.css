@@ -1,0 +1,60 @@
+html, body {
+  height:100%;
+  margin:0;
+  padding:0;
+}
+#wrapper {
+    width:100%;
+    height:100%;
+    margin:auto;
+    position:relative;
+}
+#header {
+    width: 100%;
+    height:55px; /* set to desired height*/
+    background-color: #4D4D4D; /*header color*/
+    color: #fff;
+    display: table;
+}
+#path {
+    margin-left: 10px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.path-element {
+    display: inline;
+}
+.path-element:hover {
+    background-color: white;
+    color: #4D4D4D;
+    cursor: pointer;
+}
+.path-element:first-child {
+    margin-left: 10px;
+}
+#content {
+    position:absolute;
+    bottom:0;
+    top:55px; /*must match the height of #header*/
+    width:100%;
+    overflow:auto;
+    background-color:#0099FF;  /*background color*/
+    color:#666;
+}
+.element {
+    cursor: pointer;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
+    height: 50px;
+}
+.name {
+    float: left;
+    margin-left: 10px;
+    margin-top: 18px;
+}
+.element img {
+    float: left;
+}
+
