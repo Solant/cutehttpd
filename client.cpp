@@ -4,13 +4,11 @@
 #include <QDir>
 #include <QFile>
 #include <QNetworkRequest>
-#include <QThreadPool>
 #include <QUrl>
 #include <QHostAddress>
 
 Client::Client(qintptr descr, QString absolutePath, QObject *parent) : QObject(parent)
 {
-//    QThreadPool::globalInstance()->setMaxThreadCount(5);
 
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(connected()), this, SLOT(connected()));
