@@ -17,6 +17,7 @@ public:
     static QString MIME_TYPE_TEXT_CSS;
     static QString MIME_TYPE_TEXT_HTML;
     static QString MIME_TYPE_APPLICATION_OCTET_STREAM;
+    static QString MIME_TYPE_APPLICATION_JAVASCRIPT;
 };
 
 #endif // REQUESTRESPONSEHELPER_H

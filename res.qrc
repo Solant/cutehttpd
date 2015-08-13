@@ -4,5 +4,7 @@
         <file>frontend/folder.png</file>
         <file>frontend/index.html</file>
         <file>frontend/style.css</file>
+        <file>frontend/dots.png</file>
+        <file>frontend/script.js</file>
     </qresource>
 </RCC>

@@ -36,6 +36,16 @@ void Client::readyRead() {
         response.append(page.readAll());
         page.close();
     }
+    if (url == "/script.js") {
+        //Send page
+        QFile page(":/frontend/frontend/script.js");
+        if(!page.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(page, RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT));
+        response.append(page.readAll());
+        page.close();
+    }
     if (url == "/") {
         //Send page
         QFile page(":/frontend/frontend/index.html");
@@ -49,6 +59,16 @@ void Client::readyRead() {
     if (url == "/folder.png") {
         //Send image
         QFile image(":/frontend/frontend/folder.png");
+        if(!image.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
+        response.append(image.readAll());
+        image.close();
+    }
+    if (url == "/dots.png") {
+        //Send image
+        QFile image(":/frontend/frontend/dots.png");
         if(!image.open(QIODevice::ReadOnly)) {
             qDebug() << "Unable to open file";
         }

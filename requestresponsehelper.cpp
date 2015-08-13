@@ -7,6 +7,7 @@ QString RequestResponseHelper::MIME_TYPE_IMAGE_PNG = "image/png";
 QString RequestResponseHelper::MIME_TYPE_TEXT_CSS = "text/css";
 QString RequestResponseHelper::MIME_TYPE_TEXT_HTML = "text/html";
 QString RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM = "application/octet-stream";
+QString RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT = "application/javascript";
 
 RequestResponseHelper::RequestResponseHelper()
 {
