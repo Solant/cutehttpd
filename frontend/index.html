@@ -17,6 +17,13 @@
             </div>
             <div id="content">
             </div>
+            <div id="player">
+                <div id="player_text">
+                </div>
+                <audio id="player_src" ontimeupdate="updateTimeline(this.currentTime, this.duration)"></audio>
+                <img id="player_btn" src="pause.png">
+                <input id="player_timeline" type="range" min="0" max="100" onchange="setPlayerTime(this.value)"></input>
+            </div>
         </div>
     </body>
 </html>

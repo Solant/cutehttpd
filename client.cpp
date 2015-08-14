@@ -66,9 +66,19 @@ void Client::readyRead() {
         response.append(image.readAll());
         image.close();
     }
-    if (url == "/dots.png") {
+    if (url == "/play.png") {
         //Send image
-        QFile image(":/frontend/frontend/dots.png");
+        QFile image(":/frontend/frontend/play.png");
+        if(!image.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
+        response.append(image.readAll());
+        image.close();
+    }
+    if (url == "/pause.png") {
+        //Send image
+        QFile image(":/frontend/frontend/pause.png");
         if(!image.open(QIODevice::ReadOnly)) {
             qDebug() << "Unable to open file";
         }
@@ -143,7 +153,7 @@ void Client::readyRead() {
         }
         qDebug() << "Client downloading file " << file.fileName();
         file.open(QIODevice::ReadOnly);
-        socket->write(RequestResponseHelper::createHeader(file, RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM).toUtf8());
+        socket->write(RequestResponseHelper::createHeader(file, RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM, true, true).toUtf8());
         socket->waitForBytesWritten();
         qint64 blockSize = 1000;
         file.seek(0);

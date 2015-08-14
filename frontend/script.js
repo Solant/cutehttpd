@@ -140,7 +140,11 @@ function showMenu(b, fileName) {
         newDiv.textContent = "Play";
         newDiv.addEventListener("click", function(fileName){
             return function() {
-                alert("Playing");
+                showLense(false);
+                showMenu(false);
+                showPlayer(true);
+                setPlayerText(fileName);
+                initPlayer(fileName);
             }
         }(fileName));
         menu.appendChild(newDiv);
@@ -159,3 +163,49 @@ function showMenu(b, fileName) {
 }
 
 window.onload = cd("/");
+
+//Player options
+function showPlayer(b) {
+    if (b) {
+        document.getElementById("player").style.display = "block";
+        document.getElementById("content").style.bottom = "55px";
+    } else {
+        document.getElementById("player").style.display = "none";
+        document.getElementById("content").style.bottom = "0";
+    }
+}
+
+function setPlayerText(text) {
+    document.getElementById("player_text").innerText = text;
+    document.getElementById("player_text").textContent = text;
+}
+
+function initPlayer(fileName) {
+    var btn = document.getElementById("player_btn");
+
+    //Remove listeners
+    var btnClone = btn.cloneNode(true);
+    btn.parentNode.replaceChild(btnClone, btn);
+    btnClone.addEventListener("click", function(){
+        var btn = document.getElementById("player_btn");
+        if (btn.src.endsWith("pause.png")) {
+            btn.src = "play.png";
+            document.getElementById("player_src").pause();
+        } else {
+            btn.src = "pause.png";
+            document.getElementById("player_src").play();
+        }
+    });
+
+    document.getElementById("player_src").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
+    document.getElementById("player_src").play();
+}
+
+function updateTimeline(currenttime, duration) {
+    document.getElementById("player_timeline").value = currenttime/duration*100;
+}
+
+function setPlayerTime(val) {
+//    alert("Duration: " + document.getElementById("player_src").duration + "\nCurrent: " + document.getElementById("player_src").duration/100*val);
+    document.getElementById("player_src").currentTime = document.getElementById("player_src").duration/100*val;
+}

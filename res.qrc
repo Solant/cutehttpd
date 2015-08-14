@@ -6,5 +6,7 @@
         <file>frontend/style.css</file>
         <file>frontend/dots.png</file>
         <file>frontend/script.js</file>
+        <file>frontend/pause.png</file>
+        <file>frontend/play.png</file>
     </qresource>
 </RCC>
