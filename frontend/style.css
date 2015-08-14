@@ -112,8 +112,8 @@ html, body {
 }
 input[type=range]{
     -webkit-appearance: none;
-    margin-left: 60px;
-    width: 60%;
+    margin-left: 25%;
+    width: 50%;
 }
 
 input[type=range]::-webkit-slider-runnable-track {

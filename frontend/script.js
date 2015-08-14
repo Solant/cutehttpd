@@ -112,6 +112,7 @@ function showMenu(b, fileName) {
     if (fileName === undefined) {
         return;
     }
+
     //Get file extension
     var fileExtension = fileName.split(".");
     fileExtension = fileExtension[fileExtension.length-1];
@@ -133,7 +134,7 @@ function showMenu(b, fileName) {
     menu.appendChild(newDiv);
 
     //Check if music
-    if (fileExtension == "mp3") {
+    if (fileExtension == "mp3" || fileExtension == "ogg" || fileExtension == "wav") {
         newDiv = document.createElement("div");
         newDiv.className = "menu-element";
         newDiv.innerText = "Play";
@@ -143,8 +144,7 @@ function showMenu(b, fileName) {
                 showLense(false);
                 showMenu(false);
                 showPlayer(true);
-                setPlayerText(fileName);
-                initPlayer(fileName);
+                playFile(fileName);
             }
         }(fileName));
         menu.appendChild(newDiv);
@@ -165,37 +165,33 @@ function showMenu(b, fileName) {
 window.onload = cd("/");
 
 //Player options
-function showPlayer(b) {
-    if (b) {
-        document.getElementById("player").style.display = "block";
-        document.getElementById("content").style.bottom = "55px";
-    } else {
-        document.getElementById("player").style.display = "none";
-        document.getElementById("content").style.bottom = "0";
-    }
-}
 
-function setPlayerText(text) {
-    document.getElementById("player_text").innerText = text;
-    document.getElementById("player_text").textContent = text;
-}
-
-function initPlayer(fileName) {
-    var btn = document.getElementById("player_btn");
-
-    //Remove listeners
-    var btnClone = btn.cloneNode(true);
-    btn.parentNode.replaceChild(btnClone, btn);
-    btnClone.addEventListener("click", function(){
-        var btn = document.getElementById("player_btn");
-        if (btn.src.endsWith("pause.png")) {
-            btn.src = "play.png";
+window.addEventListener("load", function() {
+    //Play/pause button events
+    document.getElementById("player_btn").addEventListener("click", function(){
+        if (this.src.endsWith("pause.png")) {
+            this.src = "play.png";
             document.getElementById("player_src").pause();
         } else {
-            btn.src = "pause.png";
+            this.src = "pause.png";
             document.getElementById("player_src").play();
         }
     });
+
+    //Show pause button if track played
+    document.getElementById("player_src").addEventListener("play", function(){
+        document.getElementById("player_btn").src = "pause.png";
+    });
+});
+
+function showPlayer(b) {
+    document.getElementById("player").style.display = b ? "block" : "none";
+    document.getElementById("content").style.bottom = b ? "55px" : "0";
+}
+
+function playFile(fileName) {
+    document.getElementById("player_text").innerText = fileName;
+    document.getElementById("player_text").textContent = fileName;
 
     document.getElementById("player_src").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
     document.getElementById("player_src").play();
@@ -206,6 +202,5 @@ function updateTimeline(currenttime, duration) {
 }
 
 function setPlayerTime(val) {
-//    alert("Duration: " + document.getElementById("player_src").duration + "\nCurrent: " + document.getElementById("player_src").duration/100*val);
     document.getElementById("player_src").currentTime = document.getElementById("player_src").duration/100*val;
 }
