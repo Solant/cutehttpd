@@ -56,51 +56,10 @@ void Client::readyRead() {
         response.append(page.readAll());
         page.close();
     }
-    if (url == "/folder.png") {
-        //Send image
-        QFile image(":/frontend/frontend/folder.png");
+    if (url.startsWith("/src/img")){
+        QFile image(":/frontend/frontend/" + url.split("/src/img/").last());
         if(!image.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
-        response.append(image.readAll());
-        image.close();
-    }
-    if (url == "/close.png") {
-        //Send image
-        QFile image(":/frontend/frontend/close.png");
-        if(!image.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
-        response.append(image.readAll());
-        image.close();
-    }
-    if (url == "/play.png") {
-        //Send image
-        QFile image(":/frontend/frontend/play.png");
-        if(!image.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
-        response.append(image.readAll());
-        image.close();
-    }
-    if (url == "/pause.png") {
-        //Send image
-        QFile image(":/frontend/frontend/pause.png");
-        if(!image.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
-        response.append(image.readAll());
-        image.close();
-    }
-    if (url == "/file.png") {
-        //Send image
-        QFile image(":/frontend/frontend/file.png");
-        if(!image.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
+            qDebug() << "Unable to open file " << image.fileName();
         }
         response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
         response.append(image.readAll());

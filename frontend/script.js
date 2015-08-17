@@ -91,10 +91,10 @@ function createElement(icon, fileName, type) {
 function showContent() {
     document.getElementById("content").innerHTML = "";
     for (var i = 0; i < state.folders.length; i++) {
-    createElement("folder.png", state.folders[i], "folder");
+    createElement("src/img/folder.png", state.folders[i], "folder");
     }
     for (var i = 0; i < state.files.length; i++) {
-    createElement("file.png", state.files[i], "file");
+    createElement("src/img/file.png", state.files[i], "file");
     }
 }
 
@@ -185,17 +185,17 @@ window.addEventListener("load", function() {
     //Play/pause button events
     document.getElementById("player_btn").addEventListener("click", function(){
         if (this.src.endsWith("pause.png")) {
-            this.src = "play.png";
+            this.src = "src/img/play.png";
             document.getElementById("player_src").pause();
         } else {
-            this.src = "pause.png";
+            this.src = "src/img/pause.png";
             document.getElementById("player_src").play();
         }
     });
 
     //Show pause button if track played
     document.getElementById("player_src").addEventListener("play", function(){
-        document.getElementById("player_btn").src = "pause.png";
+        document.getElementById("player_btn").src = "src/img/pause.png";
     });
     //Close player
     document.getElementById("player_close_btn").addEventListener("click", function(){
