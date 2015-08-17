@@ -150,6 +150,22 @@ function showMenu(b, fileName) {
         menu.appendChild(newDiv);
     }
 
+    //Check if image
+    if (fileExtension == "jpeg" || fileExtension == "jpg" || fileExtension == "png" || fileExtension == "gif") {
+        newDiv = document.createElement("div");
+        newDiv.className = "menu-element";
+        newDiv.innerText = "Show";
+        newDiv.textContent = "Show";
+        newDiv.addEventListener("click", function(fileName){
+            return function() {
+                showLense(true);
+                showMenu(false);
+                showImage(true, fileName);
+            }
+        }(fileName));
+        menu.appendChild(newDiv);
+    }
+
     //Close
     newDiv = document.createElement("div");
     newDiv.className = "menu-element";
@@ -207,4 +223,14 @@ function updateTimeline(currenttime, duration) {
 
 function setPlayerTime(val) {
     document.getElementById("player_src").currentTime = document.getElementById("player_src").duration/100*val;
+}
+
+//Viewer
+function showImage(b, fileName) {
+    document.getElementById("viewer").style.display = b ? "block" : "none";
+    if (fileName === undefined) {
+        return;
+    }
+
+    document.getElementById("viewer").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
 }

@@ -163,3 +163,9 @@ input[type=range]::-moz-range-thumb {
     background: #0099FF;
     margin-top: -4px;
 }
+#viewer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 2;
+}
