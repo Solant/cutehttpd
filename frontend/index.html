@@ -4,131 +4,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="script.js"></script>
         <title>Connected</title>
     </head>
-
-    <script>
-        var state = {}
-
-        function cd(path) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "cd", true);
-            xhr.overrideMimeType("application/json");
-            var params = "path=" + encodeURIComponent(path);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    //console.log(xhr.responseText);
-                    state = JSON.parse(xhr.responseText);
-                    update();
-                }
-            }
-            xhr.send(params);
-        }
-
-        function download(path, filename) {
-            var dl = document.createElement("a");
-            dl.setAttribute("display", "none");
-            dl.setAttribute("href", "download?path=" + encodeURIComponent(path));
-            dl.setAttribute("download", filename);
-            document.getElementById("content").appendChild(dl);
-            dl.click();
-        }
-
-        function setCurrentPath(path) {
-            document.getElementById("path").innerHTML = "";
-            var folders = path.split("/");
-            var newDiv = document.createElement("div");
-            newDiv.className = "path-element";
-            newDiv.innerText = "Root";
-            newDiv.textContent = "Root";
-            document.getElementById("path").appendChild(newDiv);
-            newDiv.addEventListener("click", function(){
-                cd("/");
-            });
-            var separator = document.createElement("span");
-            separator.innerText = "/";
-            separator.textContent = "/";
-            document.getElementById("path").appendChild(separator);
-            var closuredPath = "/";
-            for (var i = 0; i < folders.length; i++) {
-                if (folders[i] != "") {
-                    var newPathElementDiv = document.createElement("div");
-                    newPathElementDiv.innerText = folders[i];
-                    newPathElementDiv.textContent = folders[i];
-                    newPathElementDiv.className = "path-element";
-                    document.getElementById("path").appendChild(newPathElementDiv);
-                    closuredPath += folders[i] += '/';
-                    newPathElementDiv.addEventListener("click", function(path) {
-                        return function() {
-                            cd(path);
-                        }
-                    }(closuredPath));
-
-                    var separator2 = document.createElement("span");
-                    separator2.innerText = "/";
-                    separator2.textContent = "/";
-                    document.getElementById("path").appendChild(separator2);
-                }
-            }
-        }
-
-        function createElement(icon, fileName, type) {
-            var newElement = document.createElement("div");
-            newElement.className = "element";
-            if (type == "folder") {
-                newElement.addEventListener("click", function() {
-                    cd(state.currentPath + "/" + fileName);
-                });
-            }
-            if (type == "file") {
-                newElement.addEventListener("click", function () {
-                    download(state.currentPath + "/" + fileName, fileName);
-                });
-            }
-            var newImage = document.createElement("img");
-            newImage.src = icon;
-            var newName = document.createElement("span");
-            newName.className = "name";
-            newName.innerText = fileName;
-            newName.textContent = fileName;
-            newElement.appendChild(newImage);
-            newElement.appendChild(newName);
-            document.getElementById("content").appendChild(newElement);
-        }
-
-        function showContent() {
-            document.getElementById("content").innerHTML = "";
-            for (var i = 0; i < state.folders.length; i++) {
-                createElement("folder.png", state.folders[i], "folder");
-            }
-            for (var i = 0; i < state.files.length; i++) {
-                createElement("file.png", state.files[i], "file");
-            }
-        }
-
-        function update() {
-            setCurrentPath(state.currentPath);
-            showContent();
-        }
-
-        window.onload = cd("/");
-    </script>
-
     <body>
+        <div id="lense"></div>
+        <div id="menu"></div>
         <div id="wrapper">
             <div id="header">
                 <div id="path">
                 </div>
             </div>
             <div id="content">
-                <!--<div class="element">
-                    <img src="folder.png"/>
-                    <div class="name">Folder</div>
+            </div>
+            <div id="player">
+                <div id="player_text">
                 </div>
-                <div class="element">
-                    <img src="file.png"/>
-                    <div class="name">File</div>
-                </div> -->
+                <audio id="player_src" ontimeupdate="updateTimeline(this.currentTime, this.duration)"></audio>
+                <img id="player_btn" src="pause.png">
+                <input id="player_timeline" type="range" min="0" max="100" onchange="setPlayerTime(this.value)"></input>
             </div>
         </div>
     </body>

@@ -36,6 +36,16 @@ void Client::readyRead() {
         response.append(page.readAll());
         page.close();
     }
+    if (url == "/script.js") {
+        //Send page
+        QFile page(":/frontend/frontend/script.js");
+        if(!page.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(page, RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT));
+        response.append(page.readAll());
+        page.close();
+    }
     if (url == "/") {
         //Send page
         QFile page(":/frontend/frontend/index.html");
@@ -49,6 +59,26 @@ void Client::readyRead() {
     if (url == "/folder.png") {
         //Send image
         QFile image(":/frontend/frontend/folder.png");
+        if(!image.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
+        response.append(image.readAll());
+        image.close();
+    }
+    if (url == "/play.png") {
+        //Send image
+        QFile image(":/frontend/frontend/play.png");
+        if(!image.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
+        response.append(image.readAll());
+        image.close();
+    }
+    if (url == "/pause.png") {
+        //Send image
+        QFile image(":/frontend/frontend/pause.png");
         if(!image.open(QIODevice::ReadOnly)) {
             qDebug() << "Unable to open file";
         }
@@ -123,7 +153,7 @@ void Client::readyRead() {
         }
         qDebug() << "Client downloading file " << file.fileName();
         file.open(QIODevice::ReadOnly);
-        socket->write(RequestResponseHelper::createHeader(file, RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM).toUtf8());
+        socket->write(RequestResponseHelper::createHeader(file, RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM, true, true).toUtf8());
         socket->waitForBytesWritten();
         qint64 blockSize = 1000;
         file.seek(0);

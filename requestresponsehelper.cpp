@@ -1,12 +1,14 @@
 #include "requestresponsehelper.h"
 
 #include <QFile>
+#include <QFileInfo>
 #include <QUrl>
 
 QString RequestResponseHelper::MIME_TYPE_IMAGE_PNG = "image/png";
 QString RequestResponseHelper::MIME_TYPE_TEXT_CSS = "text/css";
 QString RequestResponseHelper::MIME_TYPE_TEXT_HTML = "text/html";
 QString RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM = "application/octet-stream";
+QString RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT = "application/javascript";
 
 RequestResponseHelper::RequestResponseHelper()
 {
@@ -58,10 +60,17 @@ QString RequestResponseHelper::composeJsonResponse(QString path, QStringList fol
     return response;
 }
 
-QString RequestResponseHelper::createHeader(QFile &file, QString &mimeType)
+QString RequestResponseHelper::createHeader(QFile &file, QString &mimeType, bool addContentDisposition, bool addAcceptRanges)
 {
     QString header;
     header.append("HTTP/1.1 200 OK\r\n");
+    if (addContentDisposition) {
+        header.append("Content-Disposition: attachment; filename=\"").append(QFileInfo(file.fileName()).fileName()).append("\"\r\n");
+    }
+    if (addAcceptRanges) {
+        //Chrome need this for setting currentTime on audi tags
+        header.append("Accept-Ranges: bytes\r\n");
+    }
     header.append("Content-Type: ").append(mimeType).append("\r\n");
     header.append("Content-Length: ").append(QString::number(file.size())).append("\r\n");
     header.append("\r\n");
