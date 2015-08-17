@@ -110,6 +110,13 @@ html, body {
     left: 0px;
     top: 0px;
 }
+#player_close_btn {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
 input[type=range]{
     -webkit-appearance: none;
     margin-left: 25%;

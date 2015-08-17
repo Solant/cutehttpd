@@ -165,7 +165,6 @@ function showMenu(b, fileName) {
 window.onload = cd("/");
 
 //Player options
-
 window.addEventListener("load", function() {
     //Play/pause button events
     document.getElementById("player_btn").addEventListener("click", function(){
@@ -181,6 +180,11 @@ window.addEventListener("load", function() {
     //Show pause button if track played
     document.getElementById("player_src").addEventListener("play", function(){
         document.getElementById("player_btn").src = "pause.png";
+    });
+    //Close player
+    document.getElementById("player_close_btn").addEventListener("click", function(){
+        document.getElementById("player_src").pause();
+        showPlayer(false);
     });
 });
 
