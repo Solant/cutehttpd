@@ -66,6 +66,16 @@ void Client::readyRead() {
         response.append(image.readAll());
         image.close();
     }
+    if (url == "/close.png") {
+        //Send image
+        QFile image(":/frontend/frontend/close.png");
+        if(!image.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
+        response.append(image.readAll());
+        image.close();
+    }
     if (url == "/play.png") {
         //Send image
         QFile image(":/frontend/frontend/play.png");

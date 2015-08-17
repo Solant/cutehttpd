@@ -7,5 +7,6 @@
         <file>frontend/script.js</file>
         <file>frontend/pause.png</file>
         <file>frontend/play.png</file>
+        <file>frontend/close.png</file>
     </qresource>
 </RCC>

@@ -150,6 +150,22 @@ function showMenu(b, fileName) {
         menu.appendChild(newDiv);
     }
 
+    //Check if image
+    if (fileExtension == "jpeg" || fileExtension == "jpg" || fileExtension == "png" || fileExtension == "gif") {
+        newDiv = document.createElement("div");
+        newDiv.className = "menu-element";
+        newDiv.innerText = "Show";
+        newDiv.textContent = "Show";
+        newDiv.addEventListener("click", function(fileName){
+            return function() {
+                showLense(true);
+                showMenu(false);
+                showImage(true, fileName);
+            }
+        }(fileName));
+        menu.appendChild(newDiv);
+    }
+
     //Close
     newDiv = document.createElement("div");
     newDiv.className = "menu-element";
@@ -165,7 +181,6 @@ function showMenu(b, fileName) {
 window.onload = cd("/");
 
 //Player options
-
 window.addEventListener("load", function() {
     //Play/pause button events
     document.getElementById("player_btn").addEventListener("click", function(){
@@ -181,6 +196,11 @@ window.addEventListener("load", function() {
     //Show pause button if track played
     document.getElementById("player_src").addEventListener("play", function(){
         document.getElementById("player_btn").src = "pause.png";
+    });
+    //Close player
+    document.getElementById("player_close_btn").addEventListener("click", function(){
+        document.getElementById("player_src").pause();
+        showPlayer(false);
     });
 });
 
@@ -203,4 +223,23 @@ function updateTimeline(currenttime, duration) {
 
 function setPlayerTime(val) {
     document.getElementById("player_src").currentTime = document.getElementById("player_src").duration/100*val;
+}
+
+//Hide menu and image viewer
+window.addEventListener("load", function(){
+    document.getElementById("lense").addEventListener("click", function(){
+        showLense(false);
+        showMenu(false);
+        showImage(false);
+    });
+});
+
+//Viewer
+function showImage(b, fileName) {
+    document.getElementById("viewer").style.display = b ? "block" : "none";
+    if (fileName === undefined) {
+        return;
+    }
+
+    document.getElementById("viewer").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
 }

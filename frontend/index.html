@@ -9,6 +9,7 @@
     </head>
     <body>
         <div id="lense"></div>
+        <img id="viewer">
         <div id="menu"></div>
         <div id="wrapper">
             <div id="header">
@@ -22,6 +23,7 @@
                 </div>
                 <audio id="player_src" ontimeupdate="updateTimeline(this.currentTime, this.duration)"></audio>
                 <img id="player_btn" src="pause.png">
+                <img id="player_close_btn" src="close.png">
                 <input id="player_timeline" type="range" min="0" max="100" onchange="setPlayerTime(this.value)"></input>
             </div>
         </div>
