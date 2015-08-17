@@ -164,8 +164,11 @@ input[type=range]::-moz-range-thumb {
     margin-top: -4px;
 }
 #viewer {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     z-index: 2;
+    max-width: 90%;
+    max-height: 90%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    position: absolute;
 }

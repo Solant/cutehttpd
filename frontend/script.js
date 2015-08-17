@@ -225,6 +225,15 @@ function setPlayerTime(val) {
     document.getElementById("player_src").currentTime = document.getElementById("player_src").duration/100*val;
 }
 
+//Hide menu and image viewer
+window.addEventListener("load", function(){
+    document.getElementById("lense").addEventListener("click", function(){
+        showLense(false);
+        showMenu(false);
+        showImage(false);
+    });
+});
+
 //Viewer
 function showImage(b, fileName) {
     document.getElementById("viewer").style.display = b ? "block" : "none";
