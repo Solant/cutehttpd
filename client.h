@@ -13,9 +13,13 @@ public slots:
     void connected();
     void disconnected();
     void readyRead();
+    void handleRequest();
+signals:
+    void finished();
 private:
     QTcpSocket *socket;
     QString m_rootFolder;
+    qintptr m_descr;
 };
 
 #endif // CLIENT_H

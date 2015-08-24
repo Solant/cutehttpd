@@ -9,13 +9,7 @@
 
 Client::Client(qintptr descr, QString absolutePath, QObject *parent) : QObject(parent)
 {
-
-    socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(connected()), this, SLOT(connected()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-
-    socket->setSocketDescriptor(descr);
+    m_descr = descr;
     m_rootFolder = absolutePath;
 }
 
@@ -139,6 +133,17 @@ void Client::readyRead() {
     socket->waitForBytesWritten();
     socket->close();
     socket->deleteLater();
+}
+
+void Client::handleRequest()
+{
+    socket = new QTcpSocket(this);
+    connect(socket, SIGNAL(connected()), this, SLOT(connected()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    connect(socket, SIGNAL(destroyed()), this, SIGNAL(finished()));
+
+    socket->setSocketDescriptor(m_descr);
 }
 
 void Client::connected() {

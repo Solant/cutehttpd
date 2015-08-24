@@ -1,4 +1,5 @@
 #include "client.h"
+#include "controller.h"
 #include "server.h"
 
 #include <QCoreApplication>
@@ -20,5 +21,5 @@ void Server::startServer() {
 }
 
 void Server::incomingConnection(qintptr socketDescriptor) {
-    Client *client = new Client(socketDescriptor, QDir(m_folder).absolutePath());
+    Controller *c = new Controller(socketDescriptor, QDir(m_folder).absolutePath());
 }

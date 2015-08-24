@@ -18,12 +18,14 @@ TEMPLATE = app
 SOURCES += main.cpp \
     server.cpp \
     client.cpp \
-    requestresponsehelper.cpp
+    requestresponsehelper.cpp \
+    controller.cpp
 
 HEADERS += \
     server.h \
     client.h \
-    requestresponsehelper.h
+    requestresponsehelper.h \
+    controller.h
 
 RESOURCES += \
     res.qrc
