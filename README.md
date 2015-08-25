@@ -7,9 +7,9 @@ cutehttpd is simple http server based on Qt. It's perfect for situations, when y
 ### Implemented features
 * Listen music directly from browser
 * View images directly from browser
+* Multithreading
 
 ### To be implemented features
-* Multithreading
 * File uploading
 
 ## Compile
