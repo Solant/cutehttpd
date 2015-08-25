@@ -21,5 +21,5 @@ void Server::startServer() {
 }
 
 void Server::incomingConnection(qintptr socketDescriptor) {
-    Controller *c = new Controller(socketDescriptor, QDir(m_folder).absolutePath());
+    new Controller(socketDescriptor, QDir(m_folder).absolutePath());
 }

@@ -5,22 +5,20 @@
 
 Controller::Controller(qintptr descr, QString absolutePath)
 {
+    QThread *thread = new QThread;
     Client *client = new Client(descr, absolutePath);
-    client->moveToThread(&workerThread);
-    //start
-    connect(&workerThread, SIGNAL(started()), client, SLOT(handleRequest()));
-    //stop
-    connect(client, SIGNAL(finished()), &workerThread, SIGNAL(finished()));
-    //deletion
-    connect(&workerThread, SIGNAL(finished()), client, SLOT(deleteLater()));
-    connect(&workerThread, SIGNAL(finished()), this, SLOT(deleteLater()));
+    client->moveToThread(thread);
 
-    workerThread.start();
-}
+    // Start client work on thread start
+    connect(thread, SIGNAL(started()), client, SLOT(handleRequest()));
 
-Controller::~Controller()
-{
-    qDebug() << "Thread closed";
-    workerThread.quit();
-    workerThread.wait();
+    // Connect client finished signal to trigger thread quit, then delete.
+    connect(client, SIGNAL(finished()), thread, SLOT(quit()));
+    connect(client, SIGNAL(finished()), client, SLOT(deleteLater()));
+    connect(client, SIGNAL(finished()), this, SLOT(deleteLater()));
+
+    // Make sure the thread object is deleted after execution has finished.
+    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+
+    thread->start();
 }

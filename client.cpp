@@ -111,7 +111,6 @@ void Client::readyRead() {
         if (!file.exists()) {
             qDebug() << "File not found";
             socket->close();
-            socket->deleteLater();
             return;
         }
         qDebug() << "Client downloading file " << file.fileName();
@@ -126,13 +125,13 @@ void Client::readyRead() {
         }
         file.close();
         socket->close();
-        socket->deleteLater();
+        emit finished();
         return;
     }
     socket->write(response);
     socket->waitForBytesWritten();
     socket->close();
-    socket->deleteLater();
+    emit finished();
 }
 
 void Client::handleRequest()
@@ -141,7 +140,6 @@ void Client::handleRequest()
     connect(socket, SIGNAL(connected()), this, SLOT(connected()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-    connect(socket, SIGNAL(destroyed()), this, SIGNAL(finished()));
 
     socket->setSocketDescriptor(m_descr);
 }
@@ -150,5 +148,4 @@ void Client::connected() {
 }
 
 void Client::disconnected() {
-    this->deleteLater();
 }

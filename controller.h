@@ -7,10 +7,8 @@
 class Controller : public QObject
 {
     Q_OBJECT
-    QThread workerThread;
 public:
     Controller(qintptr descr, QString absolutePath);
-    ~Controller();
 signals:
     void handle();
 
