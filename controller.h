@@ -8,11 +8,7 @@ class Controller : public QObject
 {
     Q_OBJECT
 public:
-    Controller(qintptr descr, QString absolutePath);
-signals:
-    void handle();
-
-public slots:
+    Controller(qintptr descr, QString &absolutePath);
 };
 
 #endif // CONTROLLER_H

@@ -7,7 +7,7 @@
 #include <QUrl>
 #include <QHostAddress>
 
-Client::Client(qintptr descr, QString absolutePath, QObject *parent) : QObject(parent)
+Client::Client(qintptr descr, QString &absolutePath, QObject *parent) : QObject(parent)
 {
     m_descr = descr;
     m_rootFolder = absolutePath;
@@ -50,8 +50,8 @@ void Client::readyRead() {
         response.append(page.readAll());
         page.close();
     }
-    if (url.startsWith("/src/img")){
-        QFile image(":/frontend/frontend/" + url.split("/src/img/").last());
+    if (url.startsWith("/res/img")){
+        QFile image(":/frontend/frontend/" + url.split("/res/img/").last());
         if(!image.open(QIODevice::ReadOnly)) {
             qDebug() << "Unable to open file " << image.fileName();
         }
@@ -62,27 +62,26 @@ void Client::readyRead() {
     if (url == "/cd") {
         //Change directory request
         QString request = socket->readAll();
-//        qDebug() << request;
         QMap<QString, QString> *params = RequestResponseHelper::getPostParams(request);
         QString path = params->value("path", "");
         if (path.isEmpty()) {
-            //Error
             qDebug() << "[Error] Wrong request";
             delete params;
             socket->close();
             return;
         }
+
         QDir dir(m_rootFolder + path);
-        qDebug() << "Client requested folder : " << dir.absolutePath();
+        qDebug() << "Client requested folder" << dir.absolutePath();
         if (!dir.absolutePath().startsWith(m_rootFolder)) {
-            qDebug() << "[Error] Folder " + dir.path() + " is out of shared folder";
+            qDebug() << "[Error] Folder" << dir.path() << "is out of shared folder";
             delete params;
             socket->close();
             return;
         }
         if (!dir.exists()) {
             //Error
-            qDebug() << "[Error] Folder " + path + " not exist";
+            qDebug() << "[Error] Folder" << dir.path() << "does not exist";
             delete params;
             socket->close();
             return;

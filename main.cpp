@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion("0.1");
 
     QCommandLineParser parser;
-    parser.setApplicationDescription("Qt-based http server for file sharing");
+    parser.setApplicationDescription("Qt-based HTTP server for file sharing");
     parser.addHelpOption();
     parser.addVersionOption();
 
@@ -25,26 +25,13 @@ int main(int argc, char *argv[])
     QStringList args = parser.positionalArguments();
 
     int portNumber = parser.value(portOption).toInt();
-    QString folder;
-    if (!args.size()) {
-        folder = QDir::currentPath();
-    } else {
-        if (QDir::isAbsolutePath(args.at(0))) {
-            if (!QDir(args.at(0)).exists()) {
-                qDebug() << "[Error] Folder not found";
-                exit(EXIT_FAILURE);
-            }
-            folder = args.at(0);
-        } else {
-            folder = QDir::currentPath() + QDir::separator() + args.at(0);
-            if (!QDir(folder).exists()) {
-                qDebug() << "[Error] Folder " << folder << " not found";
-                exit(EXIT_FAILURE);
-            }
-        }
+    QDir folder = args.size() ? QDir(args.at(0)) : QDir::currentPath();
+    if (!folder.exists()) {
+        qDebug() << "[Error] Folder" << folder.absolutePath() << "not found";
+        exit(EXIT_FAILURE);
     }
-    qDebug() << "Shared folder: " << folder;
-    Server server(portNumber, folder);
+    qDebug() << "Shared folder: " << folder.absolutePath();
+    Server server(portNumber, folder.absolutePath());
     server.startServer();
     return a.exec();
 }

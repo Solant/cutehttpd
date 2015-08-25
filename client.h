@@ -8,7 +8,7 @@ class Client : public QObject
 {
     Q_OBJECT
 public:
-    explicit Client(qintptr descr,QString absolutePath, QObject *parent = 0);
+    explicit Client(qintptr descr, QString &absolutePath, QObject *parent = 0);
 public slots:
     void connected();
     void disconnected();

@@ -3,7 +3,7 @@
 
 #include <QCoreApplication>
 
-Controller::Controller(qintptr descr, QString absolutePath)
+Controller::Controller(qintptr descr, QString &absolutePath)
 {
     QThread *thread = new QThread;
     Client *client = new Client(descr, absolutePath);
