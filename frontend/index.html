@@ -4,12 +4,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="viewer.js"></script>
         <script src="script.js"></script>
         <title>Connected</title>
     </head>
     <body>
         <div id="lense"></div>
-        <img id="viewer">
+        <div id="viewer">
+            <div id="viewer_button_left"><<</div>
+            <div id="viewer_button_right">>></div>
+            <div id="viewer_counter"></div>
+            <img id="viewer_src">
+        </div>
         <div id="menu"></div>
         <div id="wrapper">
             <div id="header">

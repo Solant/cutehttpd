@@ -230,16 +230,5 @@ window.addEventListener("load", function(){
     document.getElementById("lense").addEventListener("click", function(){
         showLense(false);
         showMenu(false);
-        showImage(false);
     });
 });
-
-//Viewer
-function showImage(b, fileName) {
-    document.getElementById("viewer").style.display = b ? "block" : "none";
-    if (fileName === undefined) {
-        return;
-    }
-
-    document.getElementById("viewer").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
-}

@@ -8,5 +8,6 @@
         <file>frontend/pause.png</file>
         <file>frontend/play.png</file>
         <file>frontend/close.png</file>
+        <file>frontend/viewer.js</file>
     </qresource>
 </RCC>
