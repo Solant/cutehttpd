@@ -9,5 +9,7 @@
         <file>frontend/play.png</file>
         <file>frontend/close.png</file>
         <file>frontend/viewer.js</file>
+        <file>frontend/chevron-right.png</file>
+        <file>frontend/chevron-left.png</file>
     </qresource>
 </RCC>
