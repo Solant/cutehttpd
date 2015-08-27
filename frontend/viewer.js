@@ -1,20 +1,25 @@
 var imageList = [];
+
+//Image formats for filter function
 var imageFormats = [".png", ".gif", ".jpg", ".jpeg"];
 
-//Hide image on lense click
+//Init actions
 window.addEventListener("load", function(){
+    //Hide image
     document.getElementById("lense").addEventListener("click", function(){
         showImage(false);
     });
+    //Next image
     document.getElementById("viewer_button_right").addEventListener("click", function() {
         showNextImage();
     });
+    //Prev image
     document.getElementById("viewer_button_left").addEventListener("click", function() {
         showPrevImage();
     });
 });
 
-//Arrow keys
+//Arrow keys to switch images
 window.addEventListener("keydown", function(event){
     if (document.getElementById("viewer").style.display == "block") {
         if (event.keyCode == 37) {
@@ -26,7 +31,6 @@ window.addEventListener("keydown", function(event){
     }
 });
 
-//Viewer
 function showImage(b, fileName) {
     document.getElementById("viewer").style.display = b ? "block" : "none";
     if (fileName === undefined) {

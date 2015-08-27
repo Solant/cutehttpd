@@ -133,14 +133,14 @@ function showMenu(b, fileName) {
     }(fileName));
     menu.appendChild(newDiv);
 
-    //See raw data
+    //Show as text
     newDiv = document.createElement("div");
     newDiv.className = "menu-element";
-    newDiv.innerText = "See raw data";
-    newDiv.textContent = "See raw data";
+    newDiv.innerText = "Show as text";
+    newDiv.textContent = "Show as text";
     newDiv.addEventListener("click", function(fileName){
         return function() {
-            showRaw(true, fileName, fileName);
+            showText(true, fileName);
         }
     }(fileName));
     menu.appendChild(newDiv);
@@ -192,52 +192,7 @@ function showMenu(b, fileName) {
 
 window.onload = cd("/");
 
-//Player options
-window.addEventListener("load", function() {
-    //Play/pause button events
-    document.getElementById("player_btn").addEventListener("click", function(){
-        if (this.src.endsWith("pause.png")) {
-            this.src = "res/img/play.png";
-            document.getElementById("player_src").pause();
-        } else {
-            this.src = "res/img/pause.png";
-            document.getElementById("player_src").play();
-        }
-    });
-
-    //Show pause button if track played
-    document.getElementById("player_src").addEventListener("play", function(){
-        document.getElementById("player_btn").src = "res/img/pause.png";
-    });
-    //Close player
-    document.getElementById("player_close_btn").addEventListener("click", function(){
-        document.getElementById("player_src").pause();
-        showPlayer(false);
-    });
-});
-
-function showPlayer(b) {
-    document.getElementById("player").style.display = b ? "block" : "none";
-    document.getElementById("content").style.bottom = b ? "55px" : "0";
-}
-
-function playFile(fileName) {
-    document.getElementById("player_text").innerText = fileName;
-    document.getElementById("player_text").textContent = fileName;
-
-    document.getElementById("player_src").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
-    document.getElementById("player_src").play();
-}
-
-function updateTimeline(currenttime, duration) {
-    document.getElementById("player_timeline").value = currenttime/duration*100;
-}
-
-function setPlayerTime(val) {
-    document.getElementById("player_src").currentTime = document.getElementById("player_src").duration/100*val;
-}
-
-//Hide menu and image viewer
+//Hide menu and lense on lense click
 window.addEventListener("load", function(){
     document.getElementById("lense").addEventListener("click", function(){
         showLense(false);
@@ -245,12 +200,10 @@ window.addEventListener("load", function(){
     });
 });
 
-function showRaw(b, fileName) {
-    if (!b) {
-        document.getElementById("text_viewer").style.display = "none";
-        if (currPath === undefined) {
-            return;
-        }
+function showText(b, fileName) {
+    document.getElementById("text_viewer").style.display = b ? "block" : "none";
+    if (fileName === undefined) {
+        return;
     }
 
     var xhr = new XMLHttpRequest();
@@ -260,15 +213,14 @@ function showRaw(b, fileName) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById("text_viewer_src").textContent = xhr.responseText;
         }
-        document.getElementById("text_viewer").style.display = "block";
     }
     xhr.send();
 }
 
-//Hide Raw format section
+//Hide text format section
 window.addEventListener("load", function(){
     document.getElementById("lense").addEventListener("click", function(){
         showLense(false);
-        showRaw(false);
+        showText(false);
     });
 });

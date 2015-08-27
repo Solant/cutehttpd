@@ -11,5 +11,6 @@
         <file>frontend/viewer.js</file>
         <file>frontend/chevron-right.png</file>
         <file>frontend/chevron-left.png</file>
+        <file>frontend/player.js</file>
     </qresource>
 </RCC>

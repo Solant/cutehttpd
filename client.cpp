@@ -40,6 +40,16 @@ void Client::readyRead() {
         response.append(page.readAll());
         page.close();
     }
+    if (url == "/player.js") {
+        //Send page
+        QFile page(":/frontend/frontend/player.js");
+        if(!page.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file";
+        }
+        response.append(RequestResponseHelper::createHeader(page, RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT));
+        response.append(page.readAll());
+        page.close();
+    }
     if (url == "/viewer.js") {
         //Send page
         QFile page(":/frontend/frontend/viewer.js");
