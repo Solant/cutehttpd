@@ -14,6 +14,18 @@ window.addEventListener("load", function(){
     });
 });
 
+//Arrow keys
+window.addEventListener("keydown", function(event){
+    if (document.getElementById("viewer").style.display == "block") {
+        if (event.keyCode == 37) {
+            showPrevImage();
+        }
+        if (event.keyCode == 39) {
+            showNextImage();
+        }
+    }
+});
+
 //Viewer
 function showImage(b, fileName) {
     document.getElementById("viewer").style.display = b ? "block" : "none";
