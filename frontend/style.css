@@ -207,3 +207,16 @@ input[type=range]::-moz-range-thumb {
     color:white;
     display: inline-flex;
 }
+#text_viewer {
+    overflow: auto;
+    display: none;
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+    z-index: 3;
+    background-color: white;
+}
+#text_viewer_src {
+}

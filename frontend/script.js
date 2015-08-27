@@ -133,6 +133,18 @@ function showMenu(b, fileName) {
     }(fileName));
     menu.appendChild(newDiv);
 
+    //See raw data
+    newDiv = document.createElement("div");
+    newDiv.className = "menu-element";
+    newDiv.innerText = "See raw data";
+    newDiv.textContent = "See raw data";
+    newDiv.addEventListener("click", function(fileName){
+        return function() {
+            showRaw(true, fileName, fileName);
+        }
+    }(fileName));
+    menu.appendChild(newDiv);
+
     //Check if music
     if (fileExtension == "mp3" || fileExtension == "ogg" || fileExtension == "wav") {
         newDiv = document.createElement("div");
@@ -230,5 +242,33 @@ window.addEventListener("load", function(){
     document.getElementById("lense").addEventListener("click", function(){
         showLense(false);
         showMenu(false);
+    });
+});
+
+function showRaw(b, fileName) {
+    if (!b) {
+        document.getElementById("text_viewer").style.display = "none";
+        if (currPath === undefined) {
+            return;
+        }
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "download?path="+encodeURIComponent(state.currentPath + "/" + fileName), true);
+    xhr.overrideMimeType("application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById("text_viewer_src").textContent = xhr.responseText;
+        }
+        document.getElementById("text_viewer").style.display = "block";
+    }
+    xhr.send();
+}
+
+//Hide Raw format section
+window.addEventListener("load", function(){
+    document.getElementById("lense").addEventListener("click", function(){
+        showLense(false);
+        showRaw(false);
     });
 });

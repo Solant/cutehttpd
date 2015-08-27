@@ -118,7 +118,7 @@ void Client::readyRead() {
             return;
         }
         if (!file.exists()) {
-            qDebug() << "File not found";
+            qDebug() << "File" << file.fileName() << "not found";
             socket->close();
             return;
         }
