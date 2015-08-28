@@ -212,6 +212,8 @@ function showText(b, fileName) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById("text_viewer_src").textContent = xhr.responseText;
+            document.getElementById("text_viewer_src").className = "";
+            hljs.highlightBlock(document.getElementById("text_viewer_src"));
         }
     }
     xhr.send();

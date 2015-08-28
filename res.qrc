@@ -1,16 +1,21 @@
 <RCC>
     <qresource prefix="/frontend">
-        <file>frontend/file.png</file>
-        <file>frontend/folder.png</file>
         <file>frontend/index.html</file>
-        <file>frontend/style.css</file>
-        <file>frontend/script.js</file>
-        <file>frontend/pause.png</file>
-        <file>frontend/play.png</file>
-        <file>frontend/close.png</file>
-        <file>frontend/viewer.js</file>
-        <file>frontend/chevron-right.png</file>
-        <file>frontend/chevron-left.png</file>
-        <file>frontend/player.js</file>
+        <file>frontend/styles/style.css</file>
+        <file>frontend/js/player.js</file>
+        <file>frontend/js/script.js</file>
+        <file>frontend/js/viewer.js</file>
+        <file>frontend/img/chevron-left.png</file>
+        <file>frontend/img/chevron-right.png</file>
+        <file>frontend/img/close.png</file>
+        <file>frontend/img/file.png</file>
+        <file>frontend/img/folder.png</file>
+        <file>frontend/img/pause.png</file>
+        <file>frontend/img/play.png</file>
+        <file>frontend/highlight.js/highlight.pack.js</file>
+        <file>frontend/highlight.js/styles/brown_papersq.png</file>
+        <file>frontend/highlight.js/styles/googlecode.css</file>
+        <file>frontend/highlight.js/styles/pojoaque.jpg</file>
+        <file>frontend/highlight.js/styles/school_book.png</file>
     </qresource>
 </RCC>
