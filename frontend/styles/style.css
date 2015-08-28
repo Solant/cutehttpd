@@ -220,3 +220,6 @@ input[type=range]::-moz-range-thumb {
 }
 #text_viewer_src {
 }
+#text_viewer_close {
+    float: right;
+}

@@ -20,46 +20,6 @@ void Client::readyRead() {
     QByteArray response;
 
     //Url switch
-    if (url == "/style.css") {
-        //Send page
-        QFile page(":/frontend/frontend/style.css");
-        if(!page.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(page, RequestResponseHelper::MIME_TYPE_TEXT_CSS));
-        response.append(page.readAll());
-        page.close();
-    }
-    if (url == "/script.js") {
-        //Send page
-        QFile page(":/frontend/frontend/script.js");
-        if(!page.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(page, RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT));
-        response.append(page.readAll());
-        page.close();
-    }
-    if (url == "/player.js") {
-        //Send page
-        QFile page(":/frontend/frontend/player.js");
-        if(!page.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(page, RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT));
-        response.append(page.readAll());
-        page.close();
-    }
-    if (url == "/viewer.js") {
-        //Send page
-        QFile page(":/frontend/frontend/viewer.js");
-        if(!page.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file";
-        }
-        response.append(RequestResponseHelper::createHeader(page, RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT));
-        response.append(page.readAll());
-        page.close();
-    }
     if (url == "/") {
         //Send page
         QFile page(":/frontend/frontend/index.html");
@@ -70,14 +30,14 @@ void Client::readyRead() {
         response.append(page.readAll());
         page.close();
     }
-    if (url.startsWith("/res/img")){
-        QFile image(":/frontend/frontend/" + url.split("/res/img/").last());
-        if(!image.open(QIODevice::ReadOnly)) {
-            qDebug() << "Unable to open file " << image.fileName();
+    if (url.startsWith("/res")){
+        QFile file(":/frontend/frontend/" + url.split("/res/").last());
+        if(!file.open(QIODevice::ReadOnly)) {
+            qDebug() << "Unable to open file " << file.fileName();
         }
-        response.append(RequestResponseHelper::createHeader(image, RequestResponseHelper::MIME_TYPE_IMAGE_PNG));
-        response.append(image.readAll());
-        image.close();
+        response.append(RequestResponseHelper::createHeader(file));
+        response.append(file.readAll());
+        file.close();
     }
     if (url == "/cd") {
         //Change directory request

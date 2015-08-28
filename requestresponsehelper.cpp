@@ -60,7 +60,7 @@ QString RequestResponseHelper::composeJsonResponse(QString path, QStringList fol
     return response;
 }
 
-QString RequestResponseHelper::createHeader(QFile &file, QString &mimeType, bool addContentDisposition, bool addAcceptRanges)
+QString RequestResponseHelper::createHeader(QFile &file, QString mimeType, bool addContentDisposition, bool addAcceptRanges)
 {
     QString header;
     header.append("HTTP/1.1 200 OK\r\n");
@@ -71,8 +71,22 @@ QString RequestResponseHelper::createHeader(QFile &file, QString &mimeType, bool
         //Chrome need this for setting currentTime on audi tags
         header.append("Accept-Ranges: bytes\r\n");
     }
+    if (mimeType == "autodetect") {
+        mimeType = detectMimeType(file.fileName());
+    }
     header.append("Content-Type: ").append(mimeType).append("\r\n");
     header.append("Content-Length: ").append(QString::number(file.size())).append("\r\n");
     header.append("\r\n");
     return header;
+}
+
+QString RequestResponseHelper::detectMimeType(QString fileName) {
+    QString fileExtension = fileName.split(".").last();
+    if (fileExtension == "js")
+        return MIME_TYPE_APPLICATION_JAVASCRIPT;
+    if (fileExtension == "css")
+        return MIME_TYPE_TEXT_CSS;
+    if (fileExtension == "png")
+        return MIME_TYPE_IMAGE_PNG;
+    return MIME_TYPE_APPLICATION_OCTET_STREAM;
 }
