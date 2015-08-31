@@ -12,8 +12,7 @@ html, body {
 #header {
     width: 100%;
     height:55px; /* set to desired height*/
-    background-color: #4D4D4D; /*header color*/
-    color: #fff;
+    background-color: #EFF0F1; /*header color*/
     display: table;
 }
 #path {
@@ -36,26 +35,29 @@ html, body {
     position:absolute;
     bottom:0;
     top:55px; /*must match the height of #header*/
-    width:100%;
+    right: 0;
+    left: 0;
     overflow:auto;
-    background-color:#0099FF;  /*background color*/
+    background-color:#FCFCFC;  /*background color*/
     color:#666;
+    border: 1px solid #3DAEE9;
+    border-radius: 2px;
 }
 .element {
     cursor: pointer;
-    margin-top: 15px;
-    margin-left: 10px;
-    margin-right: 10px;
-    background-color: white;
-    height: 50px;
+    display: flex;
+}
+.element:nth-child(even) {
+    background-color: #EFF0F1;
 }
 .name {
     float: left;
     margin-left: 10px;
-    margin-top: 18px;
+    margin-top: 23px;
 }
 .element img {
     float: left;
+    margin-left: 10px;
 }
 
 .option-image {
