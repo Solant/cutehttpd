@@ -32,6 +32,18 @@ QMap<QString, QString> *RequestResponseHelper::getPostParams(QString &request)
     return params;
 }
 
+QMap<QString, QString> *RequestResponseHelper::getGetParams(QString &url) {
+    QMap<QString, QString> *params = new QMap<QString, QString>();
+
+    QStringList paramsWithValues = url.split("?").last().split("&");
+    for (int i = 0; i < paramsWithValues.size(); i++) {
+        QStringList paramWithValue = paramsWithValues.at(i).split("=");
+        params->insert(paramWithValue.first(), QUrl::fromPercentEncoding(paramWithValue.last().toUtf8()));
+    }
+
+    return params;
+}
+
 QString RequestResponseHelper::composeJsonResponse(QString path, QStringList folders, QStringList files)
 {
     QString response = "{";

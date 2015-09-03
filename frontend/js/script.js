@@ -2,17 +2,17 @@ var state = {}
 
 function cd(path) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "cd", true);
-    xhr.overrideMimeType("application/json");
-    var params = "path=" + encodeURIComponent(path);
+    xhr.open("GET", "cd?path=" + encodeURIComponent(path), true);
+    if (xhr.overrideMimeType) {
+        xhr.overrideMimeType("application/json");
+    }
     xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        //console.log(xhr.responseText);
-        state = JSON.parse(xhr.responseText);
-        update();
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            state = JSON.parse(xhr.responseText);
+            update();
+        }
     }
-    }
-    xhr.send(params);
+    xhr.send();
 }
 
 function download(path, filename) {
@@ -190,7 +190,9 @@ function showMenu(b, fileName) {
     menu.appendChild(newDiv);
 }
 
-window.onload = cd("/");
+window.addEventListener("load", function(){
+    cd("/");
+});
 
 //Hide menu and lense on lense click
 window.addEventListener("load", function(){

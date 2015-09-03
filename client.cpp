@@ -39,13 +39,14 @@ void Client::readyRead() {
         response.append(file.readAll());
         file.close();
     }
-    if (url == "/cd") {
+    if (url.startsWith("/cd")) {
         //Change directory request
         QString request = socket->readAll();
-        QMap<QString, QString> *params = RequestResponseHelper::getPostParams(request);
+        QMap<QString, QString> *params = RequestResponseHelper::getGetParams(url);
         QString path = params->value("path", "");
         if (path.isEmpty()) {
             qDebug() << "[Error] Wrong request";
+            qDebug() << request;
             delete params;
             socket->close();
             return;

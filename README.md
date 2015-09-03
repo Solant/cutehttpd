@@ -14,8 +14,12 @@ cutehttpd is simple http server based on Qt. It's perfect for situations, when y
 ### To be implemented features
 * File uploading
 
+## Supported Browsers:
+Any browser higher than IE 8 is welcome. IE 8 has very basic support now (file downloading and directory navigation works fine)
+
 ## Libs used
 * [highlight.js](https://github.com/isagalaev/highlight.js)
+* [addEventListener-polyfill.js](https://gist.github.com/eirikbacker/2864711/946225eb3822c203e8d6218095d888aac5e1748e)
 
 ## Compile
 

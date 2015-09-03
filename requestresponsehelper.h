@@ -19,6 +19,7 @@ public:
     static QString MIME_TYPE_TEXT_HTML;
     static QString MIME_TYPE_APPLICATION_OCTET_STREAM;
     static QString MIME_TYPE_APPLICATION_JAVASCRIPT;
+    static QMap<QString, QString> *getGetParams(QString &url);
 };
 
 #endif // REQUESTRESPONSEHELPER_H

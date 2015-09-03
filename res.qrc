@@ -4,6 +4,7 @@
         <file>frontend/styles/style.css</file>
         <file>frontend/js/player.js</file>
         <file>frontend/js/script.js</file>
+        <file>frontend/js/addEventListener-polyfill.js</file>
         <file>frontend/js/viewer.js</file>
         <file>frontend/img/chevron-left.png</file>
         <file>frontend/img/chevron-right.png</file>

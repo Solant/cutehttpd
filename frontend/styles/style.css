@@ -45,7 +45,7 @@ html, body {
 }
 .element {
     cursor: pointer;
-    display: flex;
+    height: 64px;
 }
 .element:nth-child(even) {
     background-color: #EFF0F1;
