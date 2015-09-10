@@ -209,7 +209,7 @@ function showText(b, fileName) {
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "download?path="+encodeURIComponent(state.currentPath + "/" + fileName), true);
+    xhr.open("POST", "view?path="+encodeURIComponent(state.currentPath + "/" + fileName), true);
     xhr.overrideMimeType("application/json");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {

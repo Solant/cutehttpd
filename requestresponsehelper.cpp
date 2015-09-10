@@ -3,12 +3,14 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QUrl>
+#include <QMimeDatabase>
 
 QString RequestResponseHelper::MIME_TYPE_IMAGE_PNG = "image/png";
 QString RequestResponseHelper::MIME_TYPE_TEXT_CSS = "text/css";
 QString RequestResponseHelper::MIME_TYPE_TEXT_HTML = "text/html";
 QString RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM = "application/octet-stream";
 QString RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT = "application/javascript";
+QMimeDatabase RequestResponseHelper::m_database;
 
 RequestResponseHelper::RequestResponseHelper()
 {
@@ -83,9 +85,6 @@ QString RequestResponseHelper::createHeader(QFile &file, QString mimeType, bool 
         //Chrome need this for setting currentTime on audi tags
         header.append("Accept-Ranges: bytes\r\n");
     }
-    if (mimeType == "autodetect") {
-        mimeType = detectMimeType(file.fileName());
-    }
     header.append("Content-Type: ").append(mimeType).append("\r\n");
     header.append("Content-Length: ").append(QString::number(file.size())).append("\r\n");
     header.append("\r\n");
@@ -93,12 +92,5 @@ QString RequestResponseHelper::createHeader(QFile &file, QString mimeType, bool 
 }
 
 QString RequestResponseHelper::detectMimeType(QString fileName) {
-    QString fileExtension = fileName.split(".").last();
-    if (fileExtension == "js")
-        return MIME_TYPE_APPLICATION_JAVASCRIPT;
-    if (fileExtension == "css")
-        return MIME_TYPE_TEXT_CSS;
-    if (fileExtension == "png")
-        return MIME_TYPE_IMAGE_PNG;
-    return MIME_TYPE_APPLICATION_OCTET_STREAM;
+    return m_database.mimeTypeForFile(fileName, QMimeDatabase::MatchExtension).name();
 }

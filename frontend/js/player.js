@@ -31,7 +31,7 @@ function playFile(fileName) {
     document.getElementById("player_text").innerText = fileName;
     document.getElementById("player_text").textContent = fileName;
 
-    document.getElementById("player_src").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
+    document.getElementById("player_src").src = "view?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
     document.getElementById("player_src").play();
 }
 function updateTimeline(currenttime, duration) {

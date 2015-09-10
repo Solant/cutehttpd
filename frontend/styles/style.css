@@ -204,7 +204,7 @@ input[type=range]::-moz-range-thumb {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 55px;
+    height: 10%;
     background-color: #4D4D4D;
     color:white;
     display: inline-flex;

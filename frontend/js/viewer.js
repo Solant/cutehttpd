@@ -38,7 +38,7 @@ function showImage(b, fileName) {
     }
     loadImageList();
     document.getElementById("viewer_counter").textContent = (imageList.indexOf(fileName)+1) +  " of " + imageList.length;
-    document.getElementById("viewer_src").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
+    document.getElementById("viewer_src").src = "view?path=" + encodeURIComponent(state.currentPath + "/" + fileName);
 }
 
 function loadImageList() {
@@ -58,7 +58,7 @@ function showNextImage() {
     var currIndex = decodeURIComponent(document.getElementById("viewer_src").src).split("/");
     currIndex = imageList.indexOf(currIndex[currIndex.length-1]);
     var nextIndex = (currIndex+1)%imageList.length;         //get next index or 0 if nextIndex = imageList length
-    document.getElementById("viewer_src").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + imageList[nextIndex]);
+    document.getElementById("viewer_src").src = "view?path=" + encodeURIComponent(state.currentPath + "/" + imageList[nextIndex]);
     document.getElementById("viewer_counter").textContent = (nextIndex + 1) +  " of " + imageList.length;
 }
 
@@ -66,6 +66,6 @@ function showPrevImage() {
     var currIndex = decodeURIComponent(document.getElementById("viewer_src").src).split("/");
     currIndex = imageList.indexOf(currIndex[currIndex.length-1]);
     var nextIndex = (currIndex-1+imageList.length)%imageList.length;        
-    document.getElementById("viewer_src").src = "download?path=" + encodeURIComponent(state.currentPath + "/" + imageList[nextIndex]);
+    document.getElementById("viewer_src").src = "view?path=" + encodeURIComponent(state.currentPath + "/" + imageList[nextIndex]);
     document.getElementById("viewer_counter").textContent = (nextIndex + 1) +  " of " + imageList.length;
 }

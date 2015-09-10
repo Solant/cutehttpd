@@ -35,7 +35,7 @@ void Client::readyRead() {
         if(!file.open(QIODevice::ReadOnly)) {
             qDebug() << "Unable to open file " << file.fileName();
         }
-        response.append(RequestResponseHelper::createHeader(file));
+        response.append(RequestResponseHelper::createHeader(file, RequestResponseHelper::detectMimeType(file.fileName())));
         response.append(file.readAll());
         file.close();
     }
@@ -79,7 +79,9 @@ void Client::readyRead() {
         response.append(RequestResponseHelper::composeJsonResponse(path, folders, files));
         delete params;
     }
-    if (url.startsWith("/download")) {
+    if (url.startsWith("/download") || url.startsWith("/view")) {
+        //if url is view, then don't verbose file download process and set appropriate mime type for file
+        bool isView = url.startsWith("/view");
         //Download file request
         QString filePath = QUrl::fromPercentEncoding(url.split("=").last().toUtf8());
         QFile file(m_rootFolder + filePath);
@@ -89,13 +91,16 @@ void Client::readyRead() {
             return;
         }
         if (!file.exists()) {
-            qDebug() << "File" << file.fileName() << "not found";
+            qDebug() << "[Error] File" << file.fileName() << "not found";
             socket->close();
             return;
         }
-        qDebug() << "Client downloading file " << file.fileName();
+        if (!isView)
+            qDebug() << "Client started downloading file " << file.fileName();
         file.open(QIODevice::ReadOnly);
-        socket->write(RequestResponseHelper::createHeader(file, RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM, true, true).toUtf8());
+        socket->write(RequestResponseHelper::createHeader(file,
+                                             isView ? RequestResponseHelper::detectMimeType(file.fileName()) : RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM,
+                                             true, true).toUtf8());
         socket->waitForBytesWritten();
         qint64 blockSize = 1000;
         file.seek(0);
@@ -105,6 +110,8 @@ void Client::readyRead() {
         }
         file.close();
         socket->close();
+        if (!isView)
+            qDebug() << "Client finished downloading file " << file.fileName();
         emit finished();
         return;
     }
