@@ -18,7 +18,7 @@ void Client::readyRead() {
     QStringList tokens = QString(socket->readLine()).split(QRegExp("[ \r\n][ \r\n]*"));
     QString url = tokens[1];
     QByteArray response;
-
+    QString clientIp = QHostAddress(socket->peerAddress().toIPv4Address()).toString();
     //Url switch
     if (url == "/") {
         //Send page
@@ -53,7 +53,7 @@ void Client::readyRead() {
         }
 
         QDir dir(m_rootFolder + path);
-        qDebug() << "Client requested folder" << dir.absolutePath();
+        qDebug() << clientIp << "requested folder" << dir.absolutePath();
         if (!dir.absolutePath().startsWith(m_rootFolder)) {
             qDebug() << "[Error] Folder" << dir.path() << "is out of shared folder";
             delete params;
@@ -96,7 +96,7 @@ void Client::readyRead() {
             return;
         }
         if (!isView)
-            qDebug() << "Client started downloading file " << file.fileName();
+            qDebug() << clientIp << "started downloading file " << file.fileName();
         file.open(QIODevice::ReadOnly);
         socket->write(RequestResponseHelper::createHeader(file,
                                              isView ? RequestResponseHelper::detectMimeType(file.fileName()) : RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM,
@@ -111,7 +111,7 @@ void Client::readyRead() {
         file.close();
         socket->close();
         if (!isView)
-            qDebug() << "Client finished downloading file " << file.fileName();
+            qDebug() << clientIp << "finished downloading file " << file.fileName();
         emit finished();
         return;
     }

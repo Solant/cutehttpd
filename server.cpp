@@ -4,6 +4,11 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QProcess>
+
+#ifdef Q_OS_LINUX
+    #define LOCAL_IP_QUERY "hostname -i"
+#endif
 
 Server::Server(int port, QString folder, QObject *parent) : QTcpServer(parent)
 {
@@ -13,9 +18,13 @@ Server::Server(int port, QString folder, QObject *parent) : QTcpServer(parent)
 
 void Server::startServer() {
     if(listen(QHostAddress::Any, m_port)) {
-        qDebug() << "Server started on port " << QString::number(m_port);
+        QProcess localIpProcess;
+        localIpProcess.start(LOCAL_IP_QUERY);
+        localIpProcess.waitForFinished();
+        QByteArray localIp = localIpProcess.readAll();
+        qDebug() << "Server can be accessed on ip:" << localIp.replace(" \n", "") + ":" + QString::number(m_port);
     } else {
-        qDebug() << "[Error] Server not started";
+        qDebug() << "[Error] Unable to start server:" << errorString();
         exit(EXIT_FAILURE);
     }
 }
