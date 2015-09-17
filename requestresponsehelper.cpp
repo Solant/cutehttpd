@@ -5,36 +5,11 @@
 #include <QUrl>
 #include <QMimeDatabase>
 
-QString RequestResponseHelper::MIME_TYPE_IMAGE_PNG = "image/png";
-QString RequestResponseHelper::MIME_TYPE_TEXT_CSS = "text/css";
 QString RequestResponseHelper::MIME_TYPE_TEXT_HTML = "text/html";
 QString RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM = "application/octet-stream";
-QString RequestResponseHelper::MIME_TYPE_APPLICATION_JAVASCRIPT = "application/javascript";
 QMimeDatabase RequestResponseHelper::m_database;
 
-RequestResponseHelper::RequestResponseHelper()
-{
-
-}
-
-QMap<QString, QString> *RequestResponseHelper::getPostParams(QString &request)
-{
-    QMap<QString, QString> *params = new QMap<QString, QString>();
-    QStringList list = request.split("\r\n");
-    if (list.last().startsWith("Accept-Language")) {
-        return params;
-    }
-
-    QStringList paramsWithValues = list.last().split("&");
-    for (int i = 0; i < paramsWithValues.size(); i++) {
-        QStringList paramWithValue = paramsWithValues.at(i).split("=");
-        params->insert(paramWithValue.first(), QUrl::fromPercentEncoding(paramWithValue.last().toUtf8()));
-    }
-
-    return params;
-}
-
-QMap<QString, QString> *RequestResponseHelper::getGetParams(QString &url) {
+QMap<QString, QString> *RequestResponseHelper::getParameters(QString &url) {
     QMap<QString, QString> *params = new QMap<QString, QString>();
 
     QStringList paramsWithValues = url.split("?").last().split("&");
@@ -82,7 +57,7 @@ QString RequestResponseHelper::createHeader(QFile &file, QString mimeType, bool 
         header.append("Content-Disposition: attachment; filename=\"").append(QFileInfo(file.fileName()).fileName()).append("\"\r\n");
     }
     if (addAcceptRanges) {
-        //Chrome need this for setting currentTime on audi tags
+        //Chrome need this for setting currentTime on audio tags
         header.append("Accept-Ranges: bytes\r\n");
     }
     header.append("Content-Type: ").append(mimeType).append("\r\n");

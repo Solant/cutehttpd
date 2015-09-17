@@ -42,7 +42,7 @@ void Client::readyRead() {
     if (url.startsWith("/cd")) {
         //Change directory request
         QString request = socket->readAll();
-        QMap<QString, QString> *params = RequestResponseHelper::getGetParams(url);
+        QMap<QString, QString> *params = RequestResponseHelper::getParameters(url);
         QString path = params->value("path", "");
         if (path.isEmpty()) {
             qDebug() << "[Error] Wrong request";
@@ -124,15 +124,7 @@ void Client::readyRead() {
 void Client::handleRequest()
 {
     socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(connected()), this, SLOT(connected()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
     socket->setSocketDescriptor(m_descr);
-}
-
-void Client::connected() {
-}
-
-void Client::disconnected() {
 }

@@ -10,8 +10,6 @@ class Client : public QObject
 public:
     explicit Client(qintptr descr, QString &absolutePath, QObject *parent = 0);
 public slots:
-    void connected();
-    void disconnected();
     void readyRead();
     void handleRequest();
 signals:
