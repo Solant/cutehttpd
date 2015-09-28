@@ -2,7 +2,7 @@
 ;Variables
 
 !define APP_NAME "cutehttpd"
-!define LICENSE_FILE "license.txt"
+!define LICENSE_FILE "LICENSE.txt"
 
 ;-----------
 ;Attributes
@@ -28,15 +28,21 @@ Name "${APP_NAME}"
 
 Outfile "cutehttpd_installer.exe"
 
-InstallDir $DESKTOP
+InstallDir "$PROGRAMFILES\${APP_NAME}"
 
 Section "install" Installation_info
     SetOutPath $INSTDIR
-    File license.txt
+    File LICENSE.txt
+    File cutehttpd.exe
+    WriteRegStr "HKCR" "Directory\shell\Share via cutehttpd\command" "" "$INSTDIR\cutehttpd.exe %1"
+    WriteRegStr "HKCR" "Directory\Background\shell\Share via cutehttpd\command" "" "$INSTDIR\cutehttpd.exe"
     WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
 Section "Uninstall"
-  ;ADD YOUR OWN FILES HERE...
+  DeleteRegKey "HKCR" "Directory\Background\shell\Share via cutehttpd"
+  DeleteRegKey "HKCR" "Directory\shell\Share via cutehttpd"
   Delete "$INSTDIR\Uninstall.exe"
+  Delete "$INSTDIR\LICENSE.txt"
+  Delete "$INSTDIR\cutehttpd.exe"
 SectionEnd
