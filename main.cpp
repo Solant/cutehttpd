@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
 
     QCommandLineParser parser;
     parser.setApplicationDescription("Qt-based HTTP server for file sharing.");
-    parser.
     parser.addHelpOption();
     parser.addVersionOption();
 
