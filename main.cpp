@@ -9,10 +9,11 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     QCoreApplication::setApplicationName("cutehttpd");
-    QCoreApplication::setApplicationVersion("0.1");
+    QCoreApplication::setApplicationVersion("0.3");
 
     QCommandLineParser parser;
-    parser.setApplicationDescription("Qt-based HTTP server for file sharing");
+    parser.setApplicationDescription("Qt-based HTTP server for file sharing.");
+    parser.
     parser.addHelpOption();
     parser.addVersionOption();
 
