@@ -32,7 +32,7 @@ InstallDir "$PROGRAMFILES\${APP_NAME}"
 
 Section "install" Installation_info
     SetOutPath $INSTDIR
-    File LICENSE.txt
+    File LICENSE.md
     File cutehttpd.exe
     WriteRegStr "HKCR" "Directory\shell\Share via cutehttpd\command" "" "$INSTDIR\cutehttpd.exe %1"
     WriteRegStr "HKCR" "Directory\Background\shell\Share via cutehttpd\command" "" "$INSTDIR\cutehttpd.exe"
