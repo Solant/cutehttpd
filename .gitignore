@@ -35,3 +35,7 @@ Makefile*
 
 #Project-specific files
 /cutehttpd
+cutehttpd_plugin_import.cpp
+object_script.cutehttpd.Debug
+object_script.cutehttpd.Release
+release/

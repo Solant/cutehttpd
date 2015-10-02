@@ -2,7 +2,7 @@
 ;Variables
 
 !define APP_NAME "cutehttpd"
-!define LICENSE_FILE "LICENSE.txt"
+!define LICENSE_FILE "LICENSE.md"
 
 ;-----------
 ;Attributes
@@ -43,6 +43,6 @@ Section "Uninstall"
   DeleteRegKey "HKCR" "Directory\Background\shell\Share via cutehttpd"
   DeleteRegKey "HKCR" "Directory\shell\Share via cutehttpd"
   Delete "$INSTDIR\Uninstall.exe"
-  Delete "$INSTDIR\LICENSE.txt"
+  Delete "$INSTDIR\LICENSE.md"
   Delete "$INSTDIR\cutehttpd.exe"
 SectionEnd
