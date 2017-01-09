@@ -4,6 +4,9 @@
 #include <QFileInfo>
 #include <QUrl>
 #include <QMimeDatabase>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
 
 QString RequestResponseHelper::MIME_TYPE_TEXT_HTML = "text/html";
 QString RequestResponseHelper::MIME_TYPE_APPLICATION_OCTET_STREAM = "application/octet-stream";
@@ -21,32 +24,26 @@ QMap<QString, QString> *RequestResponseHelper::getParameters(QString &url) {
     return params;
 }
 
-QString RequestResponseHelper::composeJsonResponse(QString path, QStringList folders, QStringList files)
+QByteArray RequestResponseHelper::createJsonHeader(int contentLength)
 {
-    QString response = "{";
+    QByteArray header;
+    header.append("HTTP/1.1 200 OK\r\n");
+    header.append("Content-Type: ").append("application/json").append("\r\n");
+    header.append("Content-Length: ").append(QString::number(contentLength)).append("\r\n");
+    header.append("\r\n");
+    return header;
+}
 
-    response.append("\"currentPath\": \"" + path + "\"" + ",");
+QByteArray RequestResponseHelper::composeJsonResponse(QString path, QStringList folders, QStringList files)
+{
+    QJsonObject json;
+    json.insert("currentPath", path);
+    json.insert("folders", QJsonArray::fromStringList(folders));
+    json.insert("files", QJsonArray::fromStringList(files));
 
-    response.append("\"folders\": [");
-    for (int i = 0; i < folders.size(); i++) {
-        response.append("\"" + folders.at(i) + "\"");
-        if (i != folders.size()-1) {
-            response.append(",");
-        }
-    }
-    response.append("],");
-
-    response.append("\"files\": [");
-    for (int i = 0; i < files.size(); i++) {
-        response.append("\"" + files.at(i) + "\"");
-        if (i != files.size()-1) {
-            response.append(",");
-        }
-    }
-    response.append("]");
-
-    response.append("}");
-    return response;
+    QJsonDocument document(json);
+    QString jsonString = document.toJson(QJsonDocument::Compact);
+    return createJsonHeader(jsonString.length()).append(jsonString);
 }
 
 QString RequestResponseHelper::createHeader(QFile &file, QString mimeType, bool addContentDisposition, bool addAcceptRanges)
